@@ -5,29 +5,22 @@ const PORT = process.env.PORT || 3000;
 
 // Profil verileri
 const profiles = {
-  kanka: {
-    name: 'Kanka',
-    photo: 'https://i.imgur.com/yourpfp.jpg',
+  scrxpie: {
+    name: 'Scrxpie',
+    photo: 'https://i.imgur.com/qMw0pi0.gif',
     links: [
-      { name: 'TikTok', url: 'https://tiktok.com/@kanka' },
-      { name: 'Instagram', url: 'https://instagram.com/kanka' },
-      { name: 'Discord', url: 'https://discord.gg/seninlinkin' },
+      { name: 'TikTok', url: 'https://tiktok.com/@iixaryl' },
+      { name: 'Instagram', url: 'https://instagram.com/ixarylx' },
+      { name: 'Discord', url: 'https://discord.gg/theotherside' },
     ],
   },
-  deniz: {
-    name: 'Deniz',
-    photo: 'https://i.imgur.com/denizpfp.jpg',
-    links: [
-      { name: 'YouTube', url: 'https://youtube.com/deniz' },
-      { name: 'Twitter', url: 'https://twitter.com/deniz' },
-    ],
-  },
+  // İstersen başka profiller ekleyebilirsin
 };
 
-// Statik dosyalar için public klasörü
+// Statik dosyaları public klasöründen sun
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Ana sayfa: index.html dosyasını gönder
+// Ana sayfa için index.html dosyasını gönder
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -54,6 +47,7 @@ app.get('/:username', (req, res) => {
       <div class="container">
         <img src="${user.photo}" alt="Profil Foto" class="avatar" />
         <h1>@${user.name.toLowerCase()}</h1>
+        <p>Hoş geldin! Aşağıda linklerim var:</p>
         <div class="links">${linksHtml}</div>
       </div>
     </body>
