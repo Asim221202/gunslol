@@ -1,1 +1,42 @@
-index.html
+/* Genel ayarlar */
+body {
+  background-color: #0f0f0f;
+  color: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Profil resmi */
+.avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  border: 2px solid #444;
+}
+
+/* Konteyner */
+.container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Link kutuları */
+.links a {
+  display: block;
+  background: #1e1e1e;
+  color: white;
+  text-decoration: none;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+.links a:hover {
+  background: #333;
+}
