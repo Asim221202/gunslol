@@ -1,42 +1,28 @@
-/* Genel ayarlar */
 body {
-  background-color: #0f0f0f;
-  color: #ffffff;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #fff;
   text-align: center;
   margin: 0;
-  padding: 20px;
+  padding: 0;
 }
 
-/* Profil resmi */
-.avatar {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 10px;
-  border: 2px solid #444;
-}
-
-/* Konteyner */
 .container {
-  max-width: 400px;
-  margin: auto;
-  padding: 20px;
+  padding: 50px;
 }
 
-/* Link kutuları */
-.links a {
-  display: block;
-  background: #1e1e1e;
-  color: white;
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #00ffae;
+  color: #000;
   text-decoration: none;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 10px;
-  transition: background 0.3s;
+  border-radius: 5px;
+  margin-top: 20px;
 }
 
-.links a:hover {
-  background: #333;
+.profile-img {
+  width: 100px;
+  border-radius: 50%;
+  margin: 20px 0;
 }
