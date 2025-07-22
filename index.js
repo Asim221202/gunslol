@@ -1,60 +1,63 @@
-const express = require('express');
-const path = require('path');
+require("dotenv").config();
+const express = require("express");
+const session = require("express-session");
+const mongoose = require("mongoose");
+const passport = require("passport");
+const User = require("./models/User");
+require("./config/passport");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Profil verileri
-const profiles = {
-  scrxpie: {
-    name: 'Scrxpie',
-    photo: 'https://i.imgur.com/qMw0pi0.gif',
-    links: [
-      { name: 'TikTok', url: 'https://tiktok.com/@iixaryl' },
-      { name: 'Instagram', url: 'https://instagram.com/ixarylx' },
-      { name: 'Discord', url: 'https://discord.gg/theotherside' },
-    ],
-  },
-  // İstersen başka profiller ekleyebilirsin
-};
+app.set("view engine", "ejs");
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 
-// Statik dosyaları public klasöründen sun
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "secretkey",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
-// Ana sayfa için index.html dosyasını gönder
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// MongoDB bağlantısı
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB bağlantısı başarılı"))
+  .catch((err) => console.error("MongoDB bağlantı hatası:", err));
+
+// Google auth rotaları
+const authRoutes = require("./routes/auth");
+app.use("/auth", authRoutes);
+
+// Ana sayfa
+app.get("/", (req, res) => {
+  res.render("home", { user: req.user });
 });
 
-// Dinamik profil sayfası
-app.get('/:username', (req, res) => {
-  const user = profiles[req.params.username];
-  if (!user) return res.status(404).send('Profil bulunamadı');
-
-  const linksHtml = user.links
-    .map(link => `<a href="${link.url}" target="_blank">${link.name}</a>`)
-    .join('');
-
-  res.send(`
-    <!DOCTYPE html>
-    <html lang="tr">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>guns.lol/${user.name.toLowerCase()}</title>
-      <link rel="stylesheet" href="/style.css" />
-    </head>
-    <body>
-      <div class="container">
-        <img src="${user.photo}" alt="Profil Foto" class="avatar" />
-        <h1>@${user.name.toLowerCase()}</h1>
-        <p>Hoş geldin! Aşağıda linklerim var:</p>
-        <div class="links">${linksHtml}</div>
-      </div>
-    </body>
-    </html>
-  `);
+// Giriş yapmış kullanıcı profili
+app.get("/profile", (req, res) => {
+  if (!req.isAuthenticated()) return res.redirect("/");
+  res.render("profile", { user: req.user });
 });
 
-app.listen(PORT, () => {
-  console.log(`Sunucu ${PORT} portunda çalışıyor`);
+// Dinamik kullanıcı profili (/kullaniciadi)
+app.get("/:username", async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username.toLowerCase() });
+    if (!user) return res.status(404).render("error", { message: "Kullanıcı bulunamadı." });
+    res.render("profile", { user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).render("error", { message: "Bir hata oluştu." });
+  }
 });
+
+// 404
+app.use((req, res) => res.status(404).render("error", { message: "Sayfa bulunamadı." }));
+
+app.listen(PORT, () => console.log(`Sunucu ${PORT} portunda çalışıyor...`));
