@@ -1,11 +1,25 @@
 {
-  "name": "guns-lol-clone",
+  "name": "profil-link-sitesi",
   "version": "1.0.0",
+  "description": "guns.lol tarzı kullanıcı profili oluşturma sitesi",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
+  "keywords": [],
+  "author": "sscrxpie",
+  "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2"
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.19.2",
+    "express-session": "^1.17.3",
+    "mongoose": "^8.3.1",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
