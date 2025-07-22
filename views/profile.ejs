@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head') %>
+  <title><%= user.username %>'in Profili</title>
+</head>
+<body>
+  <div class="container">
+    <h1>👤 <%= user.displayName %></h1>
+    <img src="<%= user.profilePhoto %>" alt="Profil Fotoğrafı" class="profile-img">
+    <p>@<%= user.username %></p>
+    <a href="/logout" class="btn">Çıkış Yap</a>
+  </div>
+</body>
+</html>
