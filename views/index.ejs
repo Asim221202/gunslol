@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>theotherside.lol</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/public/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>🌌 theotherside.lol</h1>
+      <p>Kendine özel profil sayfanı oluştur.</p>
+
+      <% if (!user) { %>
+        <a href="/auth/google" class="login-button">🔐 Google ile Giriş Yap</a>
+      <% } else { %>
+        <p>Hoş geldin, <%= user.displayName %>!</p>
+        <a href="/dashboard">Profiline Git</a> | <a href="/logout">Çıkış Yap</a>
+      <% } %>
+
+      <div class="examples">
+        <h3>Örnek Profiller:</h3>
+        <ul>
+          <li><a href="/asim">/asim</a></li>
+          <li><a href="/nisa">/nisa</a></li>
+          <li><a href="/kerem">/kerem</a></li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
