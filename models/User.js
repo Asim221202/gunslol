@@ -7,6 +7,9 @@ const userSchema = new mongoose.Schema({
   bio: { type: String, default: "" },
   avatar: { type: String, default: "" },
   links: [{ name: String, url: String }],
+  verified: { type: Boolean, default: false },
+verifyCode: { type: String },
+verifyExpires: { type: Date },
 });
 
 module.exports = mongoose.model("User", userSchema);
