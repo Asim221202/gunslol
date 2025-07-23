@@ -1,14 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <%- include('partials/head') %>
-  <title>Hoş Geldin</title>
-</head>
-<body>
-  <div class="container">
-    <h1>✨ Profil Kartı Sitesi</h1>
-    <p>Giriş yap ve kendi profilini oluştur.</p>
-    <a href="/auth/google" class="btn">Google ile Giriş Yap</a>
-  </div>
-</body>
+<html lang="tr">
+  <head>
+    <%- include('partials/head') %>
+    <title>✨ Profil Kartı</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: #0f0f0f;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        text-align: center;
+        background: #1e1e1e;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        width: 90%;
+        max-width: 400px;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 1rem;
+        margin-bottom: 30px;
+        color: #bbb;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        background: #6c63ff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: background 0.3s ease;
+      }
+
+      .btn:hover {
+        background: #574fd6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>✨ Profil Kartı Sitesi</h1>
+      <p>Hemen giriş yap, kendi profil linkini oluştur!</p>
+
+      <a href="/login" class="btn">Giriş Yap</a>
+    </div>
+  </body>
 </html>
