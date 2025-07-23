@@ -1,57 +1,59 @@
 import { useState } from "react";
+import Register from "./Register";
+import Verify from "./Verify";
+import Login from "./Login";
 
-export default function Register({ onRegistered }) {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState("");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMsg("");
-    try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, username, password }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setMsg(data.msg);
-        onRegistered(email);
-      } else {
-        setMsg(data.msg || "Hata oluştu");
-      }
-    } catch (err) {
-      setMsg("Sunucuya bağlanılamadı");
-    }
-  };
+export default function AuthPage() {
+  const [stage, setStage] = useState("login"); // login, register, verify
+  const [emailToVerify, setEmailToVerify] = useState("");
+  const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        placeholder="Email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Kullanıcı Adı"
-        required
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Şifre"
-        required
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Kayıt Ol</button>
-      <p>{msg}</p>
-    </form>
+    <div>
+      {stage === "login" && (
+        <>
+          <Login
+            onLogin={(tok, usr) => {
+              setToken(tok);
+              setUser(usr);
+            }}
+          />
+          <p>
+            Hesabın yok mu?{" "}
+            <button onClick={() => setStage("register")}>Kayıt Ol</button>
+          </p>
+        </>
+      )}
+
+      {stage === "register" && (
+        <>
+          <Register
+            onRegistered={(email) => {
+              setEmailToVerify(email);
+              setStage("verify");
+            }}
+          />
+          <p>
+            Zaten üye misin?{" "}
+            <button onClick={() => setStage("login")}>Giriş Yap</button>
+          </p>
+        </>
+      )}
+
+      {stage === "verify" && (
+        <>
+          <Verify
+            email={emailToVerify}
+            onVerified={() => setStage("login")}
+          />
+          <p>
+            Kodu aldın mı? <button onClick={() => setStage("login")}>Giriş Yap</button>
+          </p>
+        </>
+      )}
+
+      {token && <p>Hoşgeldin, {user.username}!</p>}
+    </div>
   );
 }
